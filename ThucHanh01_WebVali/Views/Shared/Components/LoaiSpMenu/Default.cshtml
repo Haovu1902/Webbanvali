@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TLoaiSp>
+<div class="col-lg-3">
+    <div class="hero__categories">
+        <div class="hero__categories__all">
+            <i class="fa fa-bars"></i>
+            <span>All departments</span>
+        </div>
+        <ul>
+            @foreach (var LoaiSanPham in Model)
+            {
+                <!-- <li><a asp-controller="Home" asp-action="SanPhamTheoLoai" asp-route-maloai="@LoaiSanPham.MaLoai">@LoaiSanPham.Loai</a></li> -->
+                @*<li><a href="/home/sanphamtheoloai?MaLoai=@LoaiSanPham.MaLoai">@LoaiSanPham.Loai</a></li>*@
+                var getUrl = "https://localhost:7034/api/productsapi/" + LoaiSanPham.MaLoai;
+                <li><a style="cursor: pointer" onclick="showProductsByCategory('@getUrl')">@LoaiSanPham.Loai</a></li>
+            }
+        </ul>
+    </div>
+</div>
+<script>
+    function showProductsByCategory(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            error: function (response) {
+                console.log(response);
+            },
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str = '<p>' + val.tenSp + '</p>';
+                });
+                $('#displayProducts').html(str);
+            }
+        });
+    }
+</script>

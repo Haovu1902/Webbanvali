@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ThucHanh01_WebVali.props" />
+</Project>
